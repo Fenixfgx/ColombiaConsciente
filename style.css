@@ -1,4 +1,4 @@
-* {
+ * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -20,6 +20,12 @@
             top: 0;
             z-index: 1000;
             box-shadow: 1px 6px 14px 0px gray;
+        }
+
+        @media (max-width: 768px) {
+            .navbarx {
+                position: absolute !important;
+            }
         }
 
         .nav-container {
@@ -80,7 +86,7 @@
             }
 
             .nav-links {
-                position: fixed;
+                position: absolute;
                 top: 0;
                 right: -100%;
                 width: 50%;
@@ -562,6 +568,12 @@ body {
     flex-shrink: 0;
     display: block;
     margin-top: 3px;
+}
+
+@media (max-width: 768px) {
+    .slider img {
+        max-height: 345px;
+    }
 }
 
 /* Estilo específico para dispositivos móviles */
