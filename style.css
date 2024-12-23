@@ -22,12 +22,7 @@
             box-shadow: 1px 6px 14px 0px gray;
         }
 
-        @media (max-width: 768px) {
-            .navbarx {
-                position: absolute !important;
-            }
-        }
-
+      
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -86,7 +81,7 @@
             }
 
             .nav-links {
-                position: absolute;
+                position: fixed;
                 top: 0;
                 right: -100%;
                 width: 50%;
@@ -545,15 +540,13 @@ body {
             background-color: #0056b3;
         }
 
-.slider-container {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            height: 100%;
-            border-radius: 10px;
-            margin-top: 50px;
-            background-color: black;
-}
+        .slider-container {
+            width: 100%; /* Asegúrate de que sea del 100% del contenedor padre */
+            max-width: 1200px; /* Ajusta el ancho máximo si es necesario */
+            overflow: hidden; /* Oculta cualquier contenido que se salga de los límites */
+            margin: 0 auto; /* Centra el contenedor si es más pequeño que la pantalla */
+        }
+        
         .slider {
           width: 100% !important;
           display: flex;
@@ -592,6 +585,13 @@ body {
             justify-content: space-between;
             transform: translateY(-50%);
         }
+
+        @media (min-width: 1210px) { 
+            .controls {
+                width: 89%;
+            }
+        }
+
         .control-btn {
             background-color: transparent;
             color: white;
@@ -612,28 +612,28 @@ body {
 
 
 .slider2 {
-            position: relative;
-            width: 95%; /* El slider ocupa el 95% del ancho de la página */
-            max-width: 1200px;
-            overflow: hidden;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            background: #fff;
-        }
-        .slider-track2 {
-            display: flex;
-            gap: 5px; /* Espaciado de 5px entre publicaciones */
-            transition: transform 0.5s ease-in-out;
-        }
-        .slide2 {
-            flex: 0 0 auto; /* Las publicaciones mantienen su tamaño original */
-            box-sizing: border-box;
-            display: flex;
-            justify-content: space-around;
-        }
-        .post2 {
-            box-sizing: border-box;
-        }
+    position: relative;
+    width: 100%; /* El slider ocupa el ancho completo del contenedor */
+    overflow: hidden;
+    background: #fff;
+}
+
+.slider-track2 {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    will-change: transform;
+}
+.slide2 {
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.post2 {
+    box-sizing: border-box;
+}
+
         .controls2 {
             position: relative;
             width: 98%;
