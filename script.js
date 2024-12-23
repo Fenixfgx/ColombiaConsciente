@@ -385,31 +385,33 @@ const sliderTrack2 = document.getElementById('sliderTrack2');
     // Llamar a la función para obtener los datos desde la hoja de cálculo
     fetchPostIds();
 
-    // Función para actualizar la posición del slider
     const updateSliderPosition = () => {
         const sliderWidth = document.querySelector('.slider2').offsetWidth;
-        const postsPerScreen = Math.floor(sliderWidth / (document.querySelector('.post2').offsetWidth + 5)); // Calcula cuántas publicaciones caben en pantalla
+        const postWidth = document.querySelector('.post2').offsetWidth + 5; // Ancho + margen
+        const postsPerScreen = Math.floor(sliderWidth / postWidth);
         const totalPosts = document.querySelectorAll('.post2').length;
-
-        // Asegurar que el índice no se salga de los límites
-        if (currentIndex2 < 0) currentIndex2 = 0;
-        if (currentIndex2 >= totalPosts - postsPerScreen) currentIndex2 = totalPosts - postsPerScreen;
-
-        // Calcular el desplazamiento necesario
-        const offset = -currentIndex2 * (document.querySelector('.post2').offsetWidth + 5); // 5px de margen entre publicaciones
+    
+        // Limitar el índice para evitar desbordamientos
+        currentIndex2 = Math.max(0, Math.min(currentIndex2, totalPosts - postsPerScreen));
+    
+        // Desplazar el track
+        const offset = -currentIndex2 * postWidth;
         sliderTrack2.style.transform = `translateX(${offset}px)`;
     };
+    
 
     let currentIndex2 = 0;
 
-    document.getElementById('prevBtn2').addEventListener('click', () => {
-        currentIndex2 = Math.max(0, currentIndex2 - 1); // Mover una publicación a la vez
-        updateSliderPosition();
-    });
+// Mover hacia adelante
+document.getElementById('nextBtn2').addEventListener('click', () => {
+    const totalPosts = document.querySelectorAll('.post2').length;
+    const postsPerScreen = Math.floor(document.querySelector('.slider2').offsetWidth / (document.querySelector('.post2').offsetWidth + 5));
+    currentIndex2 = Math.min(totalPosts - postsPerScreen, currentIndex2 + 1);
+    updateSliderPosition();
+});
 
-    document.getElementById('nextBtn2').addEventListener('click', () => {
-        const totalPosts = document.querySelectorAll('.post2').length;
-        const postsPerScreen = Math.floor(document.querySelector('.slider2').offsetWidth / (document.querySelector('.post2').offsetWidth + 5));
-        currentIndex2 = Math.min(totalPosts - postsPerScreen, currentIndex2 + 1); // Mover una publicación a la vez
-        updateSliderPosition();
-    });
+// Ajustar el slider al redimensionar la ventana
+window.addEventListener('resize', updateSliderPosition);
+
+// Cargar las publicaciones y ajustar la posición inicial
+fetchPostIds().then(() => updateSliderPosition());
