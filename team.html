@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>SPA Center - Beauty & Spa HTML Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        .team img {
+          width: 100%;
+          height: 300px; /* Puedes ajustar esta altura según necesites */
+          object-fit: cover; /* Esto asegura que la imagen se recorte proporcionalmente sin deformarse */
+        }
+        .Nombre {
+            font-size: 1rem;
+            padding-left: 7px;
+            padding-right: 7px;
+        }
+        .cargo {
+            font-size: 0.8rem;
+            padding-left: 7px;
+            padding-right: 7px;
+        }
+        .col-lg-3 {
+            margin-bottom: 12px; /* Espacio entre las tarjetas */
+        }
+        /* Deshabilitar efectos hover para tarjetas sin redes sociales */
+        .team.no-social:hover .team-text {
+            top: 0 !important;
+        }
+
+        .team.no-social .team-social {
+            display: none;
+        }
+        /* Estilos para los botones de redes sociales */
+        .team-social {
+            padding: 8px 0;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .team-social .btn {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px;
+            margin: 0;
+            background: white;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .team-social .btn i {
+            color: #1d2434;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .team-social .btn:hover {
+            background: #1d2434;
+        }
+
+        .team-social .btn:hover i {
+            color: white;
+        }
+        </style>        
+</head>
+
+<body>
+    <!-- Navbar Start -->
+    <div class="container-fluid p-0">
+        <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0 px-lg-5">
+          <a href="#header-carousel" class="navbar-brand ml-lg-3">
+            <img src="https://www.partidocolombiaconsciente.com/images/CC.png" alt="Logo" style="width: 80px; height: 80px;">
+          </a>
+          <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
+            <div class="navbar-nav m-auto py-0">
+              <a href="index.html" class="nav-item nav-link active">Home</a>
+              <a href="index.html#noticias-section" class="nav-item nav-link">Noticias</a>
+              <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Acerca De</a>
+                <div class="dropdown-menu rounded-0 m-0">
+                  <a href="index.html#quienes-somos-container" class="dropdown-item">Quienes Somos</a>
+                  <a href="index.html#planes-wrapper" class="dropdown-item">Nuestras Propuestas</a>
+                  <a href="team.html" class="dropdown-item">Nuestro Equipo</a>
+                  <a href="#" class="dropdown-item">Documentos</a>
+                </div>
+              </div>
+              <a href="#" class="nav-item nav-link">Afiliados</a>
+              <a href="#" class="nav-item nav-link">PQRS</a>
+              <a href="#" class="nav-item nav-link">Danny Sequeda</a>
+              <a href="#" class="nav-item nav-link">Contactanos</a>
+            </div>
+          </div>
+        </nav>
+      </div>  
+    <!-- Navbar End -->
+
+
+    <!-- Header Start -->
+    <div class="jumbotron jumbotron-fluid bg-jumbotron" style="margin-bottom: 20px;margin-top: 70px;">
+        <div class="container text-center py-5">
+            <h3 class="text-white display-3 mb-4">Nuestro Equipo</h3>
+            <div class="d-inline-flex align-items-center text-white">
+                <p class="m-0"><a class="text-white" href="index.html">Home</a></p>
+                <i class="far fa-circle px-3"></i>
+                <p class="m-0">Nuestro Equipo</p>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+
+    <!-- Team Start -->
+    <div class="container-fluid py-5">
+        <div class="container pt-5">
+          <div class="row justify-content-center text-center">
+            <div class="col-lg-6">
+            </div>
+          </div>
+          <div class="row team-container">
+            <!-- Aquí se insertan las tarjetas dinámicamente -->
+          </div>
+        </div>
+      </div>
+      
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("https://script.google.com/macros/s/AKfycbwvty1OV9hHNl5andX2atqpWRisdOOJfH3W0um6WpsRTSVT9lIgyn6_vIK_nk_4WsE7zA/exec?sheet=NEquipo")
+              .then(response => response.json())
+              .then(data => {
+                const container = document.querySelector(".row.team-container");
+
+                data.forEach(item => {
+                  // Verificar si hay al menos una red social
+                  const hasSocialLinks = item.twitter || item.facebook || item.linkedin || item.instagram;
+                  
+                  const socialLinks = hasSocialLinks ? `
+                    <div class="team-social bg-dark text-center">
+                      ${item.twitter ? `<a class="btn btn-light" href="${item.twitter}" target="_blank"><i class="fab fa-twitter"></i></a>` : ''}
+                      ${item.facebook ? `<a class="btn btn-light" href="${item.facebook}" target="_blank"><i class="fab fa-facebook-f"></i></a>` : ''}
+                      ${item.linkedin ? `<a class="btn btn-light" href="${item.linkedin}" target="_blank"><i class="fab fa-linkedin-in"></i></a>` : ''}
+                      ${item.instagram ? `<a class="btn btn-light" href="${item.instagram}" target="_blank"><i class="fab fa-instagram"></i></a>` : ''}
+                    </div>
+                  ` : '';
+
+                  const card = `
+                    <div class="col-lg-3 col-md-6">
+                      <div class="team position-relative overflow-hidden mb-5 ${!hasSocialLinks ? 'no-social' : ''}">
+                        <img class="img-fluid" src="${item.imagen}" alt="${item.nombre}">
+                        <div class="position-relative text-center">
+                          <div class="team-text bg-primary text-white">
+                            <h5 class="text-white text-uppercase Nombre">${item.nombre}</h5>
+                            <p class="m-0 cargo">${item.cargo}</p>
+                          </div>
+                          ${socialLinks}
+                        </div>
+                      </div>
+                    </div>
+                  `;
+                  container.insertAdjacentHTML('beforeend', card);
+                });
+              });
+        });
+        </script>
+        
+    <!-- Team End -->
+
+
+    <div class="footer container-fluid position-relative bg-dark py-5" style="margin-top: 35px;">
+      <div class="container pt-5">
+          <div class="row">
+              <div class="col-lg-6 pr-lg-5 mb-5">
+                  <a href="index.html" class="navbar-brand">
+                      <img src="https://i.postimg.cc/k5DcTpyh/CC2.png" alt="Logo" style="width: 80px; height: 80px;">
+                  </a>
+                  <p>Trabajando por un mejor futuro para todos los ciudadanos, Por paz y justicia verdadera</p>
+                  <p><i class="fa fa-map-marker-alt mr-2"></i>Sede Principal Nacional: Calle 36# 15-32 Edificio Centro Colseguros Torre Norte Piso 10  Bucaramanga Santander</p>
+                  <p><i class="fa fa-phone-alt mr-2"></i>+57 3043968947</p>
+                  <p><i class="fa fa-envelope mr-2"></i>Contacto@partidocolombiaconsciente.com</p>
+                  <div class="d-flex justify-content-start mt-4">
+                      <a class="btn btn-lg btn-primary btn-lg-square mr-2" href="https://x.com/ColombiaConsc"><i class="fab fa-twitter"></i></a>
+                      <!-- <a class="btn btn-lg btn-primary btn-lg-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                      <a class="btn btn-lg btn-primary btn-lg-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a> -->
+                      <a class="btn btn-lg btn-primary btn-lg-square" href="https://www.instagram.com/ppcolombiaconsciente"><i class="fab fa-instagram"></i></a>
+                  </div>
+              </div>
+              <div class="col-lg-6 pl-lg-5" style="padding-top: 24px;">
+                  <div class="row">
+                      <div class="col-sm-6 mb-5">
+                          <h5 class="text-white text-uppercase mb-4">Quick Links</h5>
+                          <div class="d-flex flex-column justify-content-start">
+                              <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                              <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Noticias</a>
+                              <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Quienes Somos</a>
+                              <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Nuestras Propuestas</a>
+                              <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>Nuestro Equipo</a>
+                          </div>
+                      </div>
+                      <div class="col-sm-6 mb-5">
+                          <h5 class="text-white text-uppercase mb-4">Accesos Directos</h5>
+                          <div class="d-flex flex-column justify-content-start">
+                              <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Documentos</a>
+                              <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>¡Afiliate!</a>
+                              <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>PQRS</a>
+                              <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Danny Sequeda</a>
+                              <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>Contáctanos</a>
+                          </div>
+                      </div>
+                     
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="container-fluid bg-dark text-light border-top py-4" style="border-color: rgba(256, 256, 256, .15) !important;">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
+                  <p class="m-0 text-white">&copy; <a href="">Partido Politico Colombia Consciente</a>. Todos los derechos Reservados.</p>
+              </div>
+              <div class="col-md-6 text-center text-md-right">
+                  <p class="m-0 text-white">Designed by <a href="">Fenix Vanguard</a></p>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Footer End -->
+
+
+  <!-- Back to Top -->
+  <a href="#" class="btn btn-lg btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/waypoints/waypoints.min.js"></script>
+  <script src="lib/counterup/counterup.min.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="lib/tempusdominus/js/moment.min.js"></script>
+  <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+  <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+  <!-- Contact Javascript File -->
+  <script src="mail/jqBootstrapValidation.min.js"></script>
+  <script src="mail/contact.js"></script>
+
+  <!-- Template Javascript -->
+  <script src="js/main.js"></script>
+</body>
+
+</html>
