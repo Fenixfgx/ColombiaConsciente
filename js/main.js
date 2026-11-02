@@ -83,10 +83,16 @@
     
 })(jQuery);
 
-fetch("https://script.google.com/macros/s/AKfycbwvty1OV9hHNl5andX2atqpWRisdOOJfH3W0um6WpsRTSVT9lIgyn6_vIK_nk_4WsE7zA/exec?sheet=NT")
+// ponytail: main.js se carga en todas las páginas, pero estas secciones solo existen en index.html.
+// Antes se pedían siempre los 3 endpoint (aunque su contenedor no existiera) y salían errores en consola.
+const URL_SHEET = "https://script.google.com/macros/s/AKfycbwvty1OV9hHNl5andX2atqpWRisdOOJfH3W0um6WpsRTSVT9lIgyn6_vIK_nk_4WsE7zA/exec?sheet=";
+
+const noticiasEl = document.querySelector(".service-carousel");
+
+if (noticiasEl) fetch(URL_SHEET + "NT")
   .then((res) => res.json())
   .then((data) => {
-    const container = document.querySelector(".service-carousel");
+    const container = noticiasEl;
 
     data.forEach((item) => {
       const div = document.createElement("div");
@@ -139,10 +145,12 @@ fetch("https://script.google.com/macros/s/AKfycbwvty1OV9hHNl5andX2atqpWRisdOOJfH
   })
   .catch((err) => console.error("Error cargando noticias:", err));
 
-  fetch("https://script.google.com/macros/s/AKfycbwvty1OV9hHNl5andX2atqpWRisdOOJfH3W0um6WpsRTSVT9lIgyn6_vIK_nk_4WsE7zA/exec?sheet=QS")
+const quienesEl = document.getElementById("quienes-somos-container");
+
+if (quienesEl) fetch(URL_SHEET + "QS")
   .then((res) => res.json())
   .then((data) => {
-    const container = document.getElementById("quienes-somos-container");
+    const container = quienesEl;
 
     const item = data[0]; // Solo usamos el primer ítem para esta sección
 
@@ -183,7 +191,7 @@ fetch("https://script.google.com/macros/s/AKfycbwvty1OV9hHNl5andX2atqpWRisdOOJfH
   .catch((err) => console.error("Error cargando sección 'Quienes Somos':", err));
 
   document.addEventListener("DOMContentLoaded", function () {
-    fetch("https://script.google.com/macros/s/AKfycbwvty1OV9hHNl5andX2atqpWRisdOOJfH3W0um6WpsRTSVT9lIgyn6_vIK_nk_4WsE7zA/exec?sheet=Planes")
+    if (document.getElementById("planes-wrapper")) fetch(URL_SHEET + "Planes")
       .then(response => response.json())
       .then(data => {
         const $carousel = $('#pricing-carousel');

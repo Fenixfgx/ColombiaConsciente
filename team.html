@@ -26,8 +26,12 @@
     <style>
         .team img {
           width: 100%;
-          height: 300px; /* Puedes ajustar esta altura según necesites */
-          object-fit: cover; /* Esto asegura que la imagen se recorte proporcionalmente sin deformarse */
+          /* Las fotos del equipo son verticales (0.73:1). Con height:300px + cover en un móvil de 390px
+             la caja quedaba 330x300 (apaisada) y se recortaba ~34% del alto, cortando la cara. */
+          aspect-ratio: 4 / 5;
+          height: auto;
+          object-fit: cover;
+          object-position: center 25%; /* si hay que recortar, conserva la parte de arriba (el rostro) */
         }
         .Nombre {
             font-size: 1rem;
@@ -38,6 +42,13 @@
             font-size: 0.8rem;
             padding-left: 7px;
             padding-right: 7px;
+        }
+        /* css/style.css fija .team-text en 100px: los cargos largos ("Presidente Fundador Candidato a la
+           Presidencia de la Republica 2026") desbordaban el fondo azul y se cortaban. */
+        .team .team-text {
+            height: auto;
+            min-height: 100px;
+            padding: 12px 0;
         }
         .col-lg-3 {
             margin-bottom: 12px; /* Espacio entre las tarjetas */
@@ -150,28 +161,47 @@
       
       <script>
         document.addEventListener("DOMContentLoaded", function () {
+            // ponytail: control de quién aparece, sin backend.
+            //  Opción A (recomendada): dejar vacío "nombre" o "imagen" en la fila de la hoja NEquipo -> desaparece.
+            //  Opción B: escribir el nombre exacto en OCULTOS para ocultarlo sin tocar la hoja.
+            //  Si más adelante la hoja trae una columna "mostrar"/"activo", se respeta: NO, FALSE o 0 lo ocultan.
+            const OCULTOS = ["Pedro León Carvajal", "Carlos Arturo Salinas"];
+
+            const seMuestra = item => {
+              if (!item || !item.nombre || !item.nombre.trim() || !item.imagen) return false;
+              const flag = String(item.mostrar ?? item.activo ?? "").trim().toLowerCase();
+              if (["no", "false", "0"].includes(flag)) return false;
+              return !OCULTOS.some(n => n.trim().toLowerCase() === item.nombre.trim().toLowerCase());
+            };
+
             fetch("https://script.google.com/macros/s/AKfycbwvty1OV9hHNl5andX2atqpWRisdOOJfH3W0um6WpsRTSVT9lIgyn6_vIK_nk_4WsE7zA/exec?sheet=NEquipo")
               .then(response => response.json())
               .then(data => {
                 const container = document.querySelector(".row.team-container");
 
-                data.forEach(item => {
+                data.filter(seMuestra).forEach(item => {
+                  // ponytail: en la hoja los enlaces vacíos llegan como "#". Un "#" no es una red social,
+                  // así que se ignora y la tarjeta usa el estilo .no-social (sin botones que no llevan a nada).
+                  const red = v => (v && v.trim() && v.trim() !== "#" ? v.trim() : "");
+                  const twitter = red(item.twitter), facebook = red(item.facebook);
+                  const linkedin = red(item.linkedin), instagram = red(item.instagram);
+
                   // Verificar si hay al menos una red social
-                  const hasSocialLinks = item.twitter || item.facebook || item.linkedin || item.instagram;
+                  const hasSocialLinks = twitter || facebook || linkedin || instagram;
                   
                   const socialLinks = hasSocialLinks ? `
                     <div class="team-social bg-dark text-center">
-                      ${item.twitter ? `<a class="btn btn-light" href="${item.twitter}" target="_blank"><i class="fab fa-twitter"></i></a>` : ''}
-                      ${item.facebook ? `<a class="btn btn-light" href="${item.facebook}" target="_blank"><i class="fab fa-facebook-f"></i></a>` : ''}
-                      ${item.linkedin ? `<a class="btn btn-light" href="${item.linkedin}" target="_blank"><i class="fab fa-linkedin-in"></i></a>` : ''}
-                      ${item.instagram ? `<a class="btn btn-light" href="${item.instagram}" target="_blank"><i class="fab fa-instagram"></i></a>` : ''}
+                      ${twitter ? `<a class="btn btn-light" href="${twitter}" target="_blank"><i class="fab fa-twitter"></i></a>` : ''}
+                      ${facebook ? `<a class="btn btn-light" href="${facebook}" target="_blank"><i class="fab fa-facebook-f"></i></a>` : ''}
+                      ${linkedin ? `<a class="btn btn-light" href="${linkedin}" target="_blank"><i class="fab fa-linkedin-in"></i></a>` : ''}
+                      ${instagram ? `<a class="btn btn-light" href="${instagram}" target="_blank"><i class="fab fa-instagram"></i></a>` : ''}
                     </div>
                   ` : '';
 
                   const card = `
                     <div class="col-lg-3 col-md-6">
                       <div class="team position-relative overflow-hidden mb-5 ${!hasSocialLinks ? 'no-social' : ''}">
-                        <img class="img-fluid" src="${item.imagen}" alt="${item.nombre}">
+                        <img class="img-fluid" src="${item.imagen}" alt="${item.nombre}" loading="lazy" decoding="async">
                         <div class="position-relative text-center">
                           <div class="team-text bg-primary text-white">
                             <h5 class="text-white text-uppercase Nombre">${item.nombre}</h5>
